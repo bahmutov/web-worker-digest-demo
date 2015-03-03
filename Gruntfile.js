@@ -9,11 +9,7 @@ module.exports = function (grunt) {
         base: '.'
       },
       src: [
-        'README.md',
-        'console-log-div.js',
-        'test/index.html',
-        'test/existing.html',
-        'bower_components/es5-shim/es5-shim.js'
+        'README.md'
       ]
     }
   });
