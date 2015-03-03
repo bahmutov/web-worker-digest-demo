@@ -25,6 +25,7 @@
   "homepage": "https://github.com/bahmutov/web-worker-digest-demo",
   "devDependencies": {
     "grunt": "0.4.5",
-    "grunt-gh-pages": "0.10.0"
+    "grunt-gh-pages": "0.10.0",
+    "matchdep": "0.3.0"
   }
 }
