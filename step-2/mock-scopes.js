@@ -22,6 +22,7 @@
         switch (change.type) {
           case 'add':
           case 'update':
+            console.log('change', change.name, 'to', change.object[change.name]);
             self.set(change.name, change.object[change.name]);
           break;
         }
