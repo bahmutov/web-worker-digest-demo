@@ -10,7 +10,8 @@ module.exports = function (grunt) {
       },
       src: [
         'README.md',
-        'step-0/*'
+        'step-0/*',
+        'step-1/*'
       ]
     }
   });
