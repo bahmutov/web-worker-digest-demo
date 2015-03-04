@@ -13,7 +13,8 @@ module.exports = function (grunt) {
         'marked.js',
         'index.html',
         'step-0/*',
-        'step-1/*'
+        'step-1/*',
+        'step-2/*'
       ]
     }
   });
