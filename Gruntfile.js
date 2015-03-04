@@ -9,7 +9,8 @@ module.exports = function (grunt) {
         base: '.'
       },
       src: [
-        'README.md'
+        'README.md',
+        'step-0/*'
       ]
     }
   });
