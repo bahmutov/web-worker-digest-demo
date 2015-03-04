@@ -10,6 +10,8 @@ module.exports = function (grunt) {
       },
       src: [
         'README.md',
+        'marked.js',
+        'index.html',
         'step-0/*',
         'step-1/*'
       ]
