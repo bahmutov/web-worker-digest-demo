@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Run digest cycle in web worker</title>
+  <style>
+  p {
+    padding: 10px;
+  }
+  button {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  #console-log-div {
+    border: 1px solid gray;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 200px !important;
+  }
+  </style>
+</head>
+
+<body>
+  <h1>Run digest cycle in web worker</h1>
+  <fieldset id="console-log-div"></fieldset>
+  <script src="lib/console-log-div.js"></script>
+  <button id="compute">I need more primes!</button>
+
+  <div id="primes"></div>
+  <script src="primes.js"></script>
+  <script src="micro-angular.js"></script>
+  <script>
+    var scope = new Scope();
+    scope.n = 0;
+
+    function render(str) {
+      document.getElementById('primes').innerHTML = str;
+    }
+
+    function computeMarkup(scope) {
+      console.log('digest finished');
+      var n = scope.n;
+      var str = '<ul>';
+      for (k = 0; k < n; k += 1) {
+        str += '<li>' + (k + 1) + ' prime ' + scope.primes[k] + '</li>';
+      }
+      str += '</ul>';
+      console.log('returning DOM markup');
+      return str;
+    }
+
+    document.getElementById('compute').addEventListener('click', function () {
+      console.log('Button clicked, computing next 2000 primes');
+      scope.n += 2000;
+      console.log('kicking off digest cycle');
+      scope.$digest(function (scope) {
+        render(computeMarkup(scope));
+      });
+    });
+
+    scope.$watch(function (scope) {
+      return scope.n;
+    }, function (newVal, oldVal, scope) {
+      if (newVal === oldVal) {
+        console.log('nothing has changed');
+        return;
+      }
+      console.log('finding first', newVal, 'primes');
+      scope.primes = findPrimes(scope.n);
+    });
+
+  </script>
+</body>
+</html>
