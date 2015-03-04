@@ -6,6 +6,7 @@
   <style>
   body {
     font-size: 18pt;
+    background-color: white;
   }
   p {
     padding: 10px;
@@ -31,35 +32,34 @@
   <button id="compute">I need more primes!</button>
 
   <div id="primes"></div>
-  <script src="primes.js"></script>
-  <script src="micro-angular.js"></script>
+  <script src="mock-scopes.js"></script>
   <script>
+    var localN = 0;
     var scope = new Scope();
-    scope.n = 0;
+    scope.set('n', 0);
 
     function render(str) {
       document.getElementById('primes').innerHTML = str;
     }
 
-    function computeMarkup(scope) {
-      console.log('digest finished');
-      var n = scope.n;
-      var str = '<ul>';
-      for (k = 0; k < n; k += 1) {
-        str += '<li>' + (k + 1) + ' prime ' + scope.primes[k] + '</li>';
-      }
-      str += '</ul>';
-      console.log('returning DOM markup');
-      return str;
-    }
-
     document.getElementById('compute').addEventListener('click', function () {
       console.log('Button clicked, computing next 2000 primes');
-      scope.n += 2000;
+      localN += 2000;
+      scope.set('n', localN);
       console.log('kicking off digest cycle');
-      scope.$digest(function (scope) {
-        render(computeMarkup(scope));
-      });
+      scope.$digest(
+        function computeMarkup(scope) {
+          console.log('digest finished');
+          var n = scope.n;
+          var str = '<ul>';
+          for (k = 0; k < n; k += 1) {
+            str += '<li>' + (k + 1) + ' prime ' + scope.primes[k] + '</li>';
+          }
+          str += '</ul>';
+          console.log('returning DOM markup');
+          return str;
+        }
+      );
     });
 
     scope.$watch(function (scope) {
